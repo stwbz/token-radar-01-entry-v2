@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar v2 — pre-token protocols, valued from their own record</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header id="top">
+  <div class="head-row">
+    <div>
+      <h1>Token Radar <span class="v">v2</span></h1>
+      <p class="tag">Pre-token protocols, valued from their own record. Snapshot %%SNAPSHOT_DATE%% · model fitted in this program, refitted in this browser.</p>
+    </div>
+    <div class="head-meta">
+      <div class="head-line">DefiLlama snapshot %%SNAPSHOT_DATE%%</div>
+      <div class="head-line">model: size-fitted peer multiples × token odds</div>
+      <div class="head-line">walk-forward: fit on listings to 2024, newer priced blind</div>
+    </div>
+  </div>
+  <div id="cards" class="cards">
+    <div class="card"><div class="q">Out-of-sample miss, leave-one-out</div><div class="a">×%%LOO_MISS%% <span class="sub">vs ×%%LOO_FLAT%% flat</span></div><div class="d">a flat cap/TVL multiple misses by ×%%LOO_FLAT%%; %%WITHIN2%%% within 2×, %%WITHIN3%%% within 3×; walk-forward ×%%WF_MISS%% vs ×%%WF_FLAT%% flat</div></div>
+    <div class="card"><div class="q">Is the printed range honest?</div><div class="a">%%COV50%%% · %%COV80%%%</div><div class="d">of real caps fall inside P25–P75, P10–P90 (stated 50% · 80%)</div></div>
+    <div class="card"><div class="q">Token odds vs base rate, Brier</div><div class="a">%%BRIER%% <span class="sub">vs %%BRIER_BASE%%</span></div><div class="d">%%ODDS_ACC%%% called right at a 0.5 cut; walk-forward %%BRIER_WF%% vs base %%BRIER_WF_BASE%%</div></div>
+    <div class="card"><div class="q">Terms that survived both tests</div><div class="a">2 of 5 <span class="sub">value</span><br>4 of 4 <span class="sub">odds</span></div><div class="d">value model · token odds; the rest are shown below, not used</div></div>
+    <div class="card"><div class="q">Worth farming, this scenario</div><div class="a">%%FARM_N%% of 198</div><div class="d">net beats a T-bill and $25 an hour; %%MARGINAL_N%% marginal, %%SKIP_N%% skip</div></div>
+    <div class="card"><div class="q">Watchlist ranked</div><div class="a">40 / 40</div><div class="d">plus 158 pre-token protocols the watchlist leaves out</div></div>
+  </div>
+  <p class="sens">Farm count by drop share: <b>7% → %%SENS_7%%, 12% → %%SENS_12%%, 15% → %%SENS_15%%</b>. The 7% default is the assumption — move the drop-share slider to see it change.</p>
+  <p class="formula"><b>Implied value</b> = TVL × fitted multiple (the value if a token launches) × token odds (from how long peers ran before recording one). Each coefficient is fitted on this snapshot and tested held-out. The implied value already carries the launch odds, so they are not applied a second time.</p>
+</header>
+
+<section id="accounting" aria-label="Protocol accounting">
+  <h2>Protocol accounting</h2>
+  <p class="muted">All 758 snapshot protocols in exactly one group: 40 ranked watchlist, 138 ranked early, 20 ranked off-list, %%LEDGER_TOKEN_MCAP%% recorded a token with a usable market cap (95 of them, with listing dates, fit the value model), %%LEDGER_TOKEN_NOMCAP%% recorded a token with no usable cap, %%LEDGER_EXCLUDED%% left out by the house list&rsquo;s own rules (%%LEDGER_EXCLUDED_NAME%% by name rule, rest by category).</p>
+  <div class="acct-bar" role="img" aria-label="All 758 snapshot protocols in exactly one group"><span style="width:5.28%;background:#34D399" title="Ranked — watchlist 40"></span><span style="width:18.21%;background:#22D3EE" title="Ranked — early, below the floor 138"></span><span style="width:2.64%;background:#60A5FA" title="Ranked — off-list 20"></span><span style="width:16.89%;background:#FBBF24" title="Token trades — usable market cap 128"></span><span style="width:37.99%;background:#A78BFA" title="Token recorded — no usable cap 288"></span><span style="width:19.00%;background:#4B5563" title="Out — no token, excluded 144"></span></div>
+  <div class="acct-legend"><span><i style="background:#34D399"></i>Ranked — watchlist <b>40</b></span><span><i style="background:#22D3EE"></i>Ranked — early, below the floor <b>138</b></span><span><i style="background:#60A5FA"></i>Ranked — off-list <b>20</b></span><span><i style="background:#FBBF24"></i>Token trades — usable market cap <b>%%LEDGER_TOKEN_MCAP%%</b></span><span><i style="background:#A78BFA"></i>Token recorded — no usable cap <b>%%LEDGER_TOKEN_NOMCAP%%</b></span><span><i style="background:#4B5563"></i>Out — no token, excluded <b>%%LEDGER_EXCLUDED%%</b></span></div>
+  <div class="integrity"><span>✓ this table = board.json: 198 of 198 rows recomputed here</span><span>✓ ranks 1–198 in order, values never rise</span><span>✓ totals equal: %%TOTAL_IMPLIED_EXACT%%</span><span>✓ checksum %%CHECKSUM%% = main.ts</span><span>✓ watchlist 40 of 40 ranked</span><span>✓ ledger 758 of 758 protocols</span></div>
+</section>
+
+<section id="evidence" aria-label="Out-of-sample evidence">
+  <h2>Out-of-sample evidence</h2>
+  <p class="muted">A term is kept only if it lowers the held-out miss in both tests: leave-one-out, and a true walk-forward (fit on protocols listed in 2024 or earlier, price those listed later blind). The rest are shown, not used.</p>
+  <div class="ev-grid">
+    <div class="ev-col">
+      <h3>Value if a token launches — typical miss, live peers</h3>
+      <table id="tbl-ablation" class="mini"><thead><tr><th>Term, added in order</th><th>Leave-one-out</th><th>Walk-forward</th><th></th></tr></thead><tbody>%%ABLATION_ROWS%%</tbody></table>
+      <p class="muted">Walk-forward fits on tokens listed in 2024 or earlier (%%WF_NTRAIN%%) and prices the %%WF_NTEST%% listed later, blind. Growth note: the +growth row improves both tests, but the gain is carried by extreme weekly moves — winsorized tight, it vanishes (×2.97 leave-one-out, worse than size + category). It would also rank a protocol down 73% in a week first. Growth is used in the odds model instead, where its effect is small.</p>
+      <h3>Token odds — Brier score (share called right)</h3>
+      <table id="tbl-odds" class="mini"><thead><tr><th>Test</th><th>Brier</th><th>Base rate</th></tr></thead><tbody>
+        <tr><td>Ten-fold (645 protocols)</td><td>%%BRIER%%</td><td>%%BRIER_BASE%%</td></tr>
+        <tr><td>Walk-forward (fit ≤2024, test newer)</td><td>%%BRIER_WF%%</td><td>%%BRIER_WF_BASE%%</td></tr>
+        <tr><td>In-sample</td><td>%%BRIER_INSAMPLE%%</td><td>%%BRIER_BASE%%</td></tr>
+      </tbody></table>
+      <p class="muted">Walk-forward odds are weaker than the base rate. The 2025–26 cohort launched faster than the historical age curve implies, and listed_at is when DefiLlama began tracking a protocol, not its launch date — so the age curve does not transport in time. The ten-fold figure is the operative validation for the board&rsquo;s odds; the walk-forward figure is shown, not hidden.</p>
+    </div>
+    <div class="ev-col">
+      <h3>Is the printed range honest?</h3>
+      <table id="tbl-range" class="mini"><thead><tr><th>Share of real caps</th><th>Stated</th><th>Measured</th></tr></thead><tbody>
+        <tr><td>inside P25–P75</td><td>50%</td><td>%%COV50%%%</td></tr>
+        <tr><td>inside P10–P90</td><td>80%</td><td>%%COV80%%%</td></tr>
+        <tr><td>within 3× of the model</td><td>—</td><td>%%WITHIN3%%%</td></tr>
+      </tbody></table>
+      <p class="muted">Fitted, ± bootstrap s.e. (200 refits): size slope %%SLOPE%% ± %%SLOPE_SE%%; multiple at $100M TVL ×%%MULT100%% ± %%MULT100_SE%%; cohort ≤2023 / ≥2024 (LOO) ×%%COHORT_OLD%% / ×%%COHORT_NEW%%. The slope was investigated against v1 (cap exponent 0.587, fitted on 128 peers including 33 with no listing date) and the top entries&rsquo; ~0.40: the clean 95-peer fit gives 0.429, and the difference is the peer set — unlisted peers pull the slope up.</p>
+      <h3>Implied value against TVL — log scales</h3>
+      <svg id="chart" viewBox="0 0 640 170" role="img" aria-label="Scatter of TVL against implied value, log scales"></svg>
+      <p class="muted">Each dot is a ranked protocol. The multiple falls as TVL grows: the fitted log-log slope is negative, so a $2.7B protocol is not priced like a $100M one.</p>
+    </div>
+  </div>
+</section>
+
+<section id="board" class="boardsec" aria-label="Board">
+  <div class="tabs" id="mode-tabs" role="tablist" aria-label="Board mode">
+    <button data-mode="pre" class="on">Pre-token board</button>
+    <button data-mode="live">Live peers</button>
+  </div>
+  <div class="tabs" id="verdict-tabs" role="tablist" aria-label="Farm verdict">
+    <button data-verdict="all" class="on">All <span id="c-all"></span></button>
+    <button data-verdict="Farm">Farm <span id="c-farm"></span></button>
+    <button data-verdict="Marginal">Marginal <span id="c-marg"></span></button>
+    <button data-verdict="Skip">Skip <span id="c-skip"></span></button>
+  </div>
+  <div class="controls">
+    <label>Plan size <input type="range" id="plan-size" min="1" max="10" step="1" value="2"> <span id="plan-val">0.02% of TVL</span></label>
+    <label>Drop share <input type="range" id="drop-share" min="3" max="20" step="1" value="7"> <span id="drop-val">7.0%</span></label>
+    <label>Horizon <input type="range" id="horizon" min="4" max="26" step="2" value="12"> <span id="hor-val">12 wk</span></label>
+    <input id="search" type="search" placeholder="Search name, chain, category" aria-label="Search">
+    <select id="f-category" aria-label="Category"><option value="">All categories</option></select>
+    <select id="f-chain" aria-label="Chain"><option value="">All chains</option></select>
+    <select id="f-tier" aria-label="Tier"><option value="">All tiers</option><option value="0">Watchlist</option><option value="1">Off-list ≥$50M</option><option value="2">Emerging &lt;$50M</option></select>
+    <button id="btn-reset" type="button">Reset</button>
+    <button id="btn-csv" type="button">CSV</button>
+    <button id="btn-json" type="button">JSON</button>
+  </div>
+  <p class="muted" id="row-count"></p>
+  <table id="tbl" class="board">
+    <thead><tr>
+      <th data-sort="rank">#</th><th data-sort="name">Protocol</th><th data-sort="tvl">TVL</th>
+      <th data-sort="change_7d">7D</th><th data-sort="age">No-token age</th><th data-sort="odds">Token odds</th>
+      <th data-sort="launch">If it launches</th><th data-sort="implied">Implied value · P25–P75</th>
+      <th data-sort="verdict">Verdict · Net of fees</th><th data-sort="hour">Net / hour</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="muted">The Live tab shows the priced peers: every protocol whose token already trades is a price, not a rank.</p>
+</section>
+
+<section id="closest" aria-label="Closest to farm">
+  <h3>Closest to Farm — nobody clears both tests at this scenario</h3>
+  <p class="muted">At the 7% default 0 rows pass both bars. These five Marginal rows are nearest, ranked by the weaker of the two tests. The drop share is the lever: raising it lifts the expected drop without lifting the T-bill bar. Plan size cannot flip any of the five — for each, the drop and the T-bill return both scale with the deposit.</p>
+  <table class="mini near"><thead><tr><th>#</th><th>Protocol</th><th>TVL</th><th>Net</th><th>T-bill</th><th>Net / hour</th><th>Net ÷ T-bill</th><th>Net-per-hour ÷ $25</th><th>Drop share needed</th><th>Plan size needed</th><th>Closest lever</th></tr></thead><tbody>%%CLOSEST_ROWS%%</tbody></table>
+</section>
+
+<section id="method" aria-label="Method">
+  <h2>How the value is computed</h2>
+  <p id="method-text">ln(market cap) = %%VALUE_CONST%% + %%VALUE_SLOPE%% × ln(TVL) + category effect, fitted by ridge regression (λ=8 on the category dummies) on 95 traded protocols with a positive market cap and a listing date. Category effects are shrunk toward zero; a category with no traded peer gets an effect of zero. Launch value = exp of the fitted value at the protocol&rsquo;s TVL and category. Token odds are a logistic fit on 645 protocols with a listing date: logit = %%ODDS_RAW_CONST%% + %%ODDS_RAW_YEARS%% × ln(years listed) + %%ODDS_RAW_SHARE%% × category token share (shrunk, k=32) + %%ODDS_RAW_TVL%% × ln(TVL) + %%ODDS_RAW_GROWTH%% × 7-day growth (winsorized). Protocols with no listing date use the median years of no-token protocols (%%MEDIAN_YEARS%%). Implied value = launch value × odds.</p>
+  <p>Deposit 0.02% of TVL. The airdrop pool is 7% of the implied value; the farmer&rsquo;s share is pro-rata to the deposit&rsquo;s share of TVL. The implied value already carries the launch odds, so they are not applied a second time. Costs are gas summed from the ten steps ($78) plus 0.05% of the deposit in entry/exit fees. Work is 4.5 hours plus 15 minutes a week for 12 weeks (7.5 hours). Farm needs net above the T-bill return on the deposit (4.5% a year over 12 weeks) AND above $25 an hour. Marginal is a positive net that fails a test; Skip is a net at or below zero.</p>
+  <p><strong>Without a token</strong> means both <code>gecko_id</code> and <code>symbol</code> are null — market cap alone misclassifies 258 protocols. <strong>Excluded:</strong> CEX, Bridge, Canonical Bridge, Liquid Staking, Liquid Restaking, Restaked BTC, versioned names, wrapped / staked / staking products, exchange-prefixed names. A protocol records no token; the snapshot never proves it has none.</p>
+  <p id="peer-note">Live peers are the 95 protocols whose token trades with a recorded market cap and a listing date; they fit the value model. 128 protocols record a token with a usable market cap. The board never ranks a protocol whose token trades.</p>
+  <p><strong>Limits, stated plainly.</strong> Spearman rank correlation of leave-one-out predictions is %%SPEARMAN%%, worse than v1&rsquo;s 0.405: the model prices the typical token better (median miss ×2.93 vs ×3.31) but orders similar tokens slightly worse. The odds walk-forward is weaker than base (see above). The snapshot is one day, 2026-11-14; nothing here predicts when a token launches, only what it would be worth if the record stayed as it is.</p>
+</section>
+
+<aside id="drawer" aria-label="Protocol detail" hidden>
+  <button id="close" type="button">Close ×</button>
+  <div id="detail"></div>
+</aside>
+
+<footer>Token Radar v2 · snapshot 2026-11-14 · deterministic build — run main.ts twice and every byte agrees · dossier checksum %%CHECKSUM%%</footer>
+<script src="zz-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
